@@ -20,5 +20,5 @@ jobs:
           # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
           node-version: '20'
           # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
-      - run: npm install -g react
-      - run: npm list react -g
+      - run: npm install react
+      - run: npm list react
