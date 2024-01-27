@@ -1,0 +1,17 @@
+name: setup-nodejs-environment
+run-name: setup nodejs environment
+on: [push]
+jobs:
+  setup-nodejs-environment:
+    name: Use nodejs 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install react
+      - run: npm list react
+      - name: Install dependencies
+        run: npm ci
