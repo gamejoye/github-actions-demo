@@ -1,0 +1,14 @@
+name: deploy
+run-name: Deploy To Aliyun ECS
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Deploy To Server
+        run: echo "private ssh key ${{ secrets.SSH_PRIVATE_KEY }}"
