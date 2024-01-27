@@ -11,12 +11,4 @@ jobs:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v
-  setup-nodejs-environment:
-    runs-on: ubuntu-lastest
-    steps:
-      - uses: actions/setup-node@v4.0.1
-        with:
-          # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
-          node-version: '20'
-          # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
-      - run: npm install -g react
+
