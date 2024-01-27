@@ -11,4 +11,4 @@ jobs:
           node-version: "20"
           cache: "npm"
       - name: Deploy To Server
-        run: echo "private ssh key ${{ secrets.SSH_PRIVATE_KEY_ }}"
+        run: echo ""private ssh key ${{ secrets.SSH_PRIVATE_KEY_ }} ."
