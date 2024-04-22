@@ -13,8 +13,8 @@ jobs:
       mysql:
         image: mysql:8.0.27
         env:
-          MYSQL_DATABASE: action-demo
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testdb
+          MYSQL_ROOT_PASSWORD: rootpassword
         ports:
           - 3306:3306
     strategy:
@@ -31,11 +31,11 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
       - name: Run the test
-        run: npm run test
+        run: node tests/mysql.js
         env:
-          DATABASE_NAME: action-demo
+          DATABASE_NAME: testdb
           DATABASE_USERNAME: root
-          DATABASE_PASSWORD: password2
+          DATABASE_PASSWORD: rootpassword
           DATABASE_ENDPOINT: 127.0.0.1
         
       
