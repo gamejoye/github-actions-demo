@@ -3,9 +3,9 @@ const pc = require('child_process');
 
 const sqlFilePath = path.join(__dirname, './testdb.sql');
 
-pc.exec(
-  `mysql -h 127.0.0.1 --port 3306 -u root -prootpassword testdb < ${sqlFilePath}`,
-  (error, stdout, stderr) => {
-    console.log(error, stdout, stderr);
-  }
-)
+// pc.exec(
+//   `mysql -h 127.0.0.1 --port 3306 -u root -prootpassword testdb < ${sqlFilePath}`,
+//   (error, stdout, stderr) => {
+//     console.log(error, stdout, stderr);
+//   }
+// )
