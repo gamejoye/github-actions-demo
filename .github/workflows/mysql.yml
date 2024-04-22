@@ -10,9 +10,9 @@ jobs:
           MYSQL_ROOT_PASSWORD: rootpassword
           MYSQL_DATABASE: testdb
         ports:
-            - '3306:3306'
+            - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - run: mysql -h 127.0.0.1  -u root -prootpassword;
+      - run: mysql -h 127.0.0.1 --port 3306 -u root -prootpassword;
       - run: node tests/mysql.js
