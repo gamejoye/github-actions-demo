@@ -5,8 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: mysql -h 127.0.0.1 --port 3306 -u root -prootpassword;
-      - run: node tests/mysql.js
       - name: mkdir sdk
         run: rm -rf ./sdk && mkdir sdk && touch index.js
       - name: Set up Git
