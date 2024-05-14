@@ -1,0 +1,23 @@
+name: Git
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mysql -h 127.0.0.1 --port 3306 -u root -prootpassword;
+      - run: node tests/mysql.js
+      - name: mkdir sdk
+        run: rm -rf ./sdk && mkdir sdk && touch index.js
+      - name: Set up Git
+        run: |
+          git config --global user.name 'gamejoye'
+          git config --global user.email 'gamejoye@gmail.com'
+      - name: Add and Commit Sdk
+        run: |
+          git add ./sdk
+          git commit -m "chore(sdk): sdk";
+      - name: Push Sdk
+        run: git push -u https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gamejoye/nestjs-imjoye.git master
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
