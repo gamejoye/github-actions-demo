@@ -9,11 +9,8 @@ jobs:
         run: rm -rf ./sdk && mkdir sdk && touch sdk/index.js
       - name: Set up Git
         run: |
-          export GITHUB_USER=gamejoye
-          echo "GITHUB_USER=$GITHUB_USER" >> $GITHUB_ENV
-          echo "GITHUB_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> $GITHUB_ENV
-          git config --global user.email "gamejoye@gmail.com"
-          git config --global user.name $GITHUB_USER
+          git config --global user.email 'gamejoye@gmail.com'
+          git config --global user.name 'gamejoye'
       - name: Add and Commit Sdk
         run: |
           git add ./sdk
@@ -21,7 +18,7 @@ jobs:
       - name: Git Status
         run: git status
       - name: Push Sdk
-        run: git push -u https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gamejoye/github-actions-demo.git master
+        run: git push
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
