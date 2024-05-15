@@ -6,19 +6,19 @@ FRONTEND_REPO_DIR="./"
 TEMP_DIR="./tmp/backend-repo"
 SDK_DIR="sdk"
 
-# git clone $BACKEND_REPO $TEMP_DIR
+git clone $BACKEND_REPO $TEMP_DIR
 
-# rm -rf $FRONTEND_REPO_DIR/$SDK_DIR
+rm -rf $FRONTEND_REPO_DIR/$SDK_DIR
 
-# cp -R $TEMP_DIR/$SDK_DIR $FRONTEND_REPO_DIR/
+cp -R $TEMP_DIR/$SDK_DIR $FRONTEND_REPO_DIR/
 
-# cd $FRONTEND_REPO_DIR
+cd $FRONTEND_REPO_DIR
 
-# git add .
+git add .
 
-# git commit -m "chore(sdk): update sdk from server repo"
+git commit -m "chore(sdk): update sdk from server repo"
 
-# git push
+git push
 
 # rm -rf $TEMP_DIR
 
