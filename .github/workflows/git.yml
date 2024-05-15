@@ -14,7 +14,7 @@ jobs:
       - name: Add and Commit Sdk
         run: |
           git add ./sdk
-          git commit -m "chore(sdk): sdk";
+          git commit -m "chore(sdk): sdk" || echo "No Changes";
       - name: Git Status
         run: git status
       - name: Push Sdk
