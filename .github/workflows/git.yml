@@ -16,6 +16,7 @@ jobs:
         run: |
           git add ./sdk
           git commit -m "chore(sdk): sdk"
+        continue-on-error: true
       - name: Run after Changes
         if: steps.commit_sdk.outcome == 'success'
         run: |
