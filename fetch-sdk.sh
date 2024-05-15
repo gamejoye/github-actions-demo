@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # BACKEND_REPO="git@github.com:gamejoye/github-actions-demo.git"
+
 BACKEND_REPO="https://github.com/gamejoye/nestjs-imjoye.git"
 FRONTEND_REPO_DIR="./"
-TEMP_DIR="./tmp"
+TEMP_DIR="tmp"
 SDK_DIR="sdk"
 
 git clone $BACKEND_REPO $TEMP_DIR
@@ -20,6 +21,6 @@ git commit -m "chore(sdk): update sdk from server repo"
 
 git push
 
-rm -rf $TEMP_DIR
+rm -rf. $FRONTEND_REPO_DIR $TEMP_DIR
 
 echo "SDK更新完成并已提交到前端仓库。"
