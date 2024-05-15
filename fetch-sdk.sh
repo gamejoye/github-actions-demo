@@ -20,6 +20,6 @@ git commit -m "chore(sdk): update sdk from server repo"
 
 git push
 
-# rm -rf $TEMP_DIR
+rm -rf $TEMP_DIR
 
 echo "SDK更新完成并已提交到前端仓库。"
