@@ -15,7 +15,7 @@ jobs:
         id: commit_sdk
         run: |
           git add ./sdk
-          git commit -m "chore(sdk): sdk" || echo "No Changes";
+          git commit -m "chore(sdk): sdk"
       - name: Run after Changes
         if: steps.commit_sdk.outcome == 'success'
         run: |
