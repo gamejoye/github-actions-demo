@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # BACKEND_REPO="git@github.com:gamejoye/github-actions-demo.git"
 BACKEND_REPO="git@github.com:gamejoye/nestjs-imjoye.git"
