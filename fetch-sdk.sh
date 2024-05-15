@@ -6,7 +6,7 @@ FRONTEND_REPO_DIR="./"
 TEMP_DIR="./tmp/backend-repo"
 SDK_DIR="sdk"
 
-git clone $BACKEND_REPO $TEMP_DIR
+# git clone $BACKEND_REPO $TEMP_DIR
 
 # rm -rf $FRONTEND_REPO_DIR/$SDK_DIR
 
