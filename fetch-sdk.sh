@@ -3,7 +3,7 @@
 # BACKEND_REPO="git@github.com:gamejoye/github-actions-demo.git"
 BACKEND_REPO="https://github.com/gamejoye/nestjs-imjoye.git"
 FRONTEND_REPO_DIR="./"
-TEMP_DIR="./tmp/backend-repo"
+TEMP_DIR="./tmp"
 SDK_DIR="sdk"
 
 git clone $BACKEND_REPO $TEMP_DIR
