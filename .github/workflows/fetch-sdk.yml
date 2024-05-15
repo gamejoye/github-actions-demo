@@ -13,6 +13,8 @@ jobs:
           git config --global user.name 'gamejoye'
       - name: Fetch Sdk from Server
         run: |
+          ls . -a
+          ls .. -a
           chmod +x ./fetch-sdk.sh
           ./fetch-sdk.sh
 
