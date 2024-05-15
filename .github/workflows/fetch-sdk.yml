@@ -1,4 +1,4 @@
-name: Git
+name: Fetch Sdk
 on: push
 permissions:
   contents: write
@@ -11,13 +11,9 @@ jobs:
         run: |
           git config --global user.email 'gamejoye@gmail.com'
           git config --global user.name 'gamejoye'
-      - name: Add and Commit Sdk
+      - name: Fetch Sdk from Server
         run: |
-          git add ./sdk
-          git commit -m "chore(sdk): sdk";
-      - name: Git Status
-        run: git status
-      - name: Push Sdk
-        run: git push
+          chmod +x fetch-sdk.sh
+          ./fetch-sdk.sh
 
 
