@@ -12,9 +12,14 @@ jobs:
           git config --global user.email 'gamejoye@gmail.com'
           git config --global user.name 'gamejoye'
       - name: Add and Commit Sdk
+        id: commit_sdk
         run: |
           git add ./sdk
           git commit -m "chore(sdk): sdk" || echo "No Changes";
+      - name: Run after Changes
+        if: steps.commit_sdk.outcome == 'success'
+        run: |
+          echo "gamejoye gamejoye is run run run"
       - name: Git Status
         run: git status
       - name: Push Sdk
