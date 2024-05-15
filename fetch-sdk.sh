@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # BACKEND_REPO="git@github.com:gamejoye/github-actions-demo.git"
-BACKEND_REPO="git@github.com:gamejoye/nestjs-imjoye.git"
+BACKEND_REPO="https://github.com/gamejoye/nestjs-imjoye.git"
 FRONTEND_REPO_DIR="./"
 TEMP_DIR="./tmp/backend-repo"
 SDK_DIR="sdk"
