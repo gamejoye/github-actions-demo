@@ -6,16 +6,20 @@
 
 export interface paths {
   "/users/{id}": {
-    get: operations["UsersController_getUserByid"];
+    /** 根据userId获取用户 */
+    get: operations["UsersController_getUserById"];
   };
   "/users/{id}/friends": {
+    /** 根据userId获取好友列表 */
     get: operations["UsersController_getFriendsById"];
   };
   "/users/{id}/friends/{friendId}": {
-    get: operations["UsersController_getFriendByUserIdAndFriendId"];
+    /** 获取好友信息 */
+    get: operations["UsersController_getFriendInfoByUserIdAndFriendId"];
   };
   "/users/avatar/upload": {
-    post: operations["UsersController_uploadFile"];
+    /** 上传头像 */
+    post: operations["UsersController_uploadAvatar"];
   };
   "/auth/login": {
     /** 用户登录 */
@@ -56,6 +60,71 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
+    ApiBaseResult: {
+      /** @description Http状态码 */
+      statusCode: number;
+      /** @description Http内容的简要概述 */
+      message: string;
+    };
+    UserVo: {
+      /**
+       * @description 唯一主键
+       * @example 987654321
+       */
+      id: number;
+      /**
+       * @description 用户名
+       * @example gamejoye
+       */
+      username: string;
+      /**
+       * @description 用户名邮箱
+       * @example gamejoye@gmail.com
+       */
+      email: string;
+      /**
+       * @description 用户头像
+       * @example https://gamejoye.top/static/media/bg.6885a3ed90df348b4f7a.jpeg
+       */
+      avatarUrl: string;
+      /**
+       * @description 用户个性签名
+       * @example 天天开心， 天天向上
+       */
+      description: string;
+      /**
+       * @description 注册时间
+       * @example 2024-03-23 19:12
+       */
+      createTime: string;
+    };
+    FriendInfoVo: {
+      /** @description 好友的基本信息 */
+      user: components["schemas"]["UserVo"];
+      /**
+       * @description 好友请求状态
+       * @example PENDING
+       * @enum {string}
+       */
+      status: "PENDING" | "ACCEPT" | "REJECT";
+      /**
+       * @description 好友请求创建的时间
+       * @example 2024-05-20 19:12
+       */
+      createTime: string;
+      /**
+       * @description 好友请求状态更改的时间
+       * @example 2024-05-20 21:09
+       */
+      updateTime: string;
+    };
+    String: Record<string, never>;
+    LoginVo: {
+      /** @description 用户id */
+      id: number;
+      /** @description 用户登录成功后的认证信息 */
+      token: string;
+    };
     LoginUserRequestDto: {
       /**
        * @description 用户邮箱
@@ -90,7 +159,7 @@ export interface components {
        */
       avatarUrl: string;
     };
-    Chatroom: {
+    ChatroomVo: {
       /**
        * @description 房间号
        * @example 987654321
@@ -99,8 +168,9 @@ export interface components {
       /**
        * @description 聊天室类型(单聊、多聊)
        * @example SINGLE
+       * @enum {string}
        */
-      type: string;
+      type: "SINGLE" | "MULTIPLE";
       /**
        * @description 聊天室名字
        * @example chatroomName
@@ -117,44 +187,7 @@ export interface components {
        */
       createTime: string;
     };
-    User: {
-      /**
-       * @description 唯一主键
-       * @example 987654321
-       */
-      id: number;
-      /**
-       * @description 用户名
-       * @example gamejoye
-       */
-      username: string;
-      /**
-       * @description 用户名邮箱
-       * @example gamejoye@gmail.com
-       */
-      email: string;
-      /**
-       * @description 经过hash之后的密码
-       * @example xxxxx
-       */
-      passwordHash: string;
-      /**
-       * @description 用户头像
-       * @example https://gamejoye.top/static/media/bg.6885a3ed90df348b4f7a.jpeg
-       */
-      avatarUrl: string;
-      /**
-       * @description 用户个性签名
-       * @example 天天开心， 天天向上
-       */
-      description: string;
-      /**
-       * @description 注册时间
-       * @example 2024-03-23 19:12
-       */
-      createTime: string;
-    };
-    Message: {
+    MessageVo: {
       /**
        * @description 消息id
        * @example 987654321
@@ -166,9 +199,9 @@ export interface components {
        */
       temporaryId: number;
       /** @description 消息所属聊天室 */
-      chatroom: components["schemas"]["Chatroom"];
+      chatroom: components["schemas"]["ChatroomVo"];
       /** @description 消息由谁发出 */
-      from: components["schemas"]["User"];
+      from: components["schemas"]["UserVo"];
       /**
        * @description 消息内容
        * @example 你好，很高兴认识你
@@ -180,9 +213,7 @@ export interface components {
        */
       createTime: string;
     };
-    ChatroomSummary: {
-      /** @description 当前聊天室的最新一条消息 */
-      latestMessage: components["schemas"]["Message"];
+    ChatroomSummaryVo: {
       /**
        * @description 当前聊天室最后一次用户的访问时间 最早为用户加入聊天室的时间
        * @example 2024-03-23 19:12
@@ -207,9 +238,23 @@ export interface components {
        *   712
        * ]
        */
-      onlineUserIds: string[];
+      onlineUserIds: number[];
       /** @description 当前summary记录所对应的chatroom */
-      chatroom: components["schemas"]["Chatroom"];
+      chatroom: components["schemas"]["ChatroomVo"];
+      /** @description 当前聊天室的最新一条消息 */
+      latestMessage: components["schemas"]["MessageVo"];
+    };
+    GetChatroomSummaryDto: {
+      /**
+       * @description 聊天室id
+       * @example 11234889
+       */
+      id: number;
+      /**
+       * @description 最后一次用户访问当前聊天室的时间
+       * @example 2024-03-23 19:12
+       */
+      latestVisitTime: string;
     };
     GetChatroomSummariesDto: {
       /**
@@ -225,7 +270,7 @@ export interface components {
        *   }
        * ]
        */
-      latestVisitTimes: string[];
+      latestVisitTimes: components["schemas"]["GetChatroomSummaryDto"][];
     };
     IAddMessageChatroomDto: {
       /** @description 待添加消息所属聊天室id */
@@ -259,18 +304,29 @@ export type external = Record<string, never>;
 
 export interface operations {
 
-  UsersController_getUserByid: {
+  /** 根据userId获取用户 */
+  UsersController_getUserById: {
     parameters: {
       path: {
         id: number;
       };
     };
     responses: {
+      /** @description 成功获取用户 */
       200: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["UserVo"];
+          };
+        };
+      };
+      /** @description 未认证用户 */
+      401: {
         content: never;
       };
     };
   };
+  /** 根据userId获取好友列表 */
   UsersController_getFriendsById: {
     parameters: {
       path: {
@@ -278,30 +334,72 @@ export interface operations {
       };
     };
     responses: {
+      /** @description 成功根据userId获取好友列表 */
       200: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["UserVo"][];
+          };
+        };
+      };
+      /** @description 未认证用户 */
+      401: {
+        content: never;
+      };
+      /** @description 权限不足 */
+      403: {
         content: never;
       };
     };
   };
-  UsersController_getFriendByUserIdAndFriendId: {
+  /** 获取好友信息 */
+  UsersController_getFriendInfoByUserIdAndFriendId: {
     parameters: {
-      query: {
-        detail: string;
-      };
       path: {
         id: number;
         friendId: number;
       };
     };
     responses: {
+      /** @description 成功获取好友信息 */
       200: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["FriendInfoVo"];
+          };
+        };
+      };
+      /** @description 未认证用户 */
+      401: {
+        content: never;
+      };
+      /** @description 权限不足 */
+      403: {
         content: never;
       };
     };
   };
-  UsersController_uploadFile: {
+  /** 上传头像 */
+  UsersController_uploadAvatar: {
+    requestBody: {
+      content: {
+        "multipart/form-data": {
+          /** Format: binary */
+          file?: string;
+        };
+      };
+    };
     responses: {
+      /** @description 头像上传成功 */
       201: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["String"];
+          };
+        };
+      };
+      /** @description 头像大小超过2MB */
+      413: {
         content: never;
       };
     };
@@ -315,8 +413,12 @@ export interface operations {
     };
     responses: {
       /** @description 登录成功 */
-      200: {
-        content: never;
+      201: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["LoginVo"];
+          };
+        };
       };
       /** @description 登录失败 */
       401: {
@@ -333,8 +435,12 @@ export interface operations {
     };
     responses: {
       /** @description 注册成功 */
-      200: {
-        content: never;
+      201: {
+        content: {
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["UserVo"];
+          };
+        };
       };
       /** @description 注册失败 */
       401: {
@@ -375,14 +481,16 @@ export interface operations {
   ChatroomsController_getChatroom: {
     parameters: {
       path: {
-        id: number;
+        chatroomId: number;
       };
     };
     responses: {
       /** @description 成功获取单个聊天室 */
       200: {
         content: {
-          "application/json": components["schemas"]["Chatroom"];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["ChatroomVo"];
+          };
         };
       };
       /** @description 未认证用户 */
@@ -407,10 +515,12 @@ export interface operations {
       };
     };
     responses: {
-      /** @description 成功获取单个单聊聊天室 */
+      /** @description 成功获取单个聊天室 */
       200: {
         content: {
-          "application/json": components["schemas"]["Chatroom"];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["ChatroomVo"];
+          };
         };
       };
       /** @description 未认证用户 */
@@ -440,14 +550,14 @@ export interface operations {
       /** @description 成功获取单个聊天室的chatroomSummaries */
       200: {
         content: {
-          "application/json": components["schemas"]["ChatroomSummary"];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["ChatroomSummaryVo"];
+          };
         };
       };
       /** @description 未认证用户 */
       401: {
-        content: {
-          "application/json": components["schemas"]["ChatroomSummary"];
-        };
+        content: never;
       };
     };
   };
@@ -462,14 +572,14 @@ export interface operations {
       /** @description 成功获取chatroomSummaries */
       200: {
         content: {
-          "application/json": components["schemas"]["ChatroomSummary"][];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["ChatroomSummaryVo"][];
+          };
         };
       };
       /** @description 未认证用户 */
       401: {
-        content: {
-          "application/json": components["schemas"]["ChatroomSummary"][];
-        };
+        content: never;
       };
     };
   };
@@ -477,7 +587,10 @@ export interface operations {
   MessagesController_getMessagesByChatroomId: {
     parameters: {
       query: {
-        /** @description 消息所属聊天室的id */
+        /**
+         * @description 房间id
+         * @example 2
+         */
         room_id: number;
       };
     };
@@ -485,11 +598,17 @@ export interface operations {
       /** @description 成功获取聊天室消息 */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"][];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["MessageVo"][];
+          };
         };
       };
       /** @description 未认证用户 */
       401: {
+        content: never;
+      };
+      /** @description 聊天室不存在 */
+      404: {
         content: never;
       };
     };
@@ -505,11 +624,21 @@ export interface operations {
       /** @description 成功发送消息 */
       201: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["ApiBaseResult"] & {
+            data?: components["schemas"]["MessageVo"];
+          };
         };
       };
       /** @description 未认证用户 */
       401: {
+        content: never;
+      };
+      /** @description 无法在该聊天室发送消息 */
+      403: {
+        content: never;
+      };
+      /** @description 资源不存在 */
+      404: {
         content: never;
       };
     };
