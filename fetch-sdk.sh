@@ -17,6 +17,7 @@ cd $FRONTEND_REPO_DIR
 
 git add .
 
+
 git commit -m "chore(sdk): update sdk from server repo"
 
 git push
