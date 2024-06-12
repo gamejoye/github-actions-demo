@@ -20,6 +20,7 @@ git add .
 
 git commit -m "chore(sdk): update sdk from server repo"
 
+
 git push
 
 rm -rf $FRONTEND_REPO_DIR/$TEMP_DIR
